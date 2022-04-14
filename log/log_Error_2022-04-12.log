@@ -1,0 +1,25 @@
+Tuesday, 12-Apr-22 11:03:04 CST	ERROR	MLogger	MFile/main.go:13	Error text
+main.main
+	D:/goProject/MFile/main.go:13
+runtime.main
+	D:/golang/src/runtime/proc.go:255
+Tuesday, 12-Apr-22 11:47:57 CST	ERROR	MLogger	MFile/main.go:13	Error text
+main.main
+	D:/goProject/MFile/main.go:13
+runtime.main
+	D:/golang/src/runtime/proc.go:255
+Tuesday, 12-Apr-22 11:48:12 CST	ERROR	MLogger	MFile/main.go:13	Error text
+main.main
+	D:/goProject/MFile/main.go:13
+runtime.main
+	D:/golang/src/runtime/proc.go:255
+Tuesday, 12-Apr-22 15:19:09 CST	ERROR	MLogger	MFile/main.go:13	Error text
+main.main
+	D:/goProject/MFile/main.go:13
+runtime.main
+	D:/golang/src/runtime/proc.go:255
+Tuesday, 12-Apr-22 18:13:04 CST	ERROR	MLogger	MFile/main.go:13	Error text
+main.main
+	D:/goProject/MFile/main.go:13
+runtime.main
+	D:/golang/src/runtime/proc.go:255
