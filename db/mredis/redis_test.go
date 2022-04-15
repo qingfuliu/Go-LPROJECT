@@ -205,3 +205,24 @@ func TestLikes(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+func TestChan(t *testing.T) {
+
+	send := make(chan int, 4)
+	temp := make(chan int)
+	defer close(temp)
+	go func() {
+		for elem := range send {
+			fmt.Println(elem)
+		}
+		temp <- 0
+	}()
+	go func() {
+		for index := 0; index <= 5; index++ {
+			send <- index
+		}
+		temp <- 0
+		close(send)
+	}()
+	<-temp
+	<-temp
+}
