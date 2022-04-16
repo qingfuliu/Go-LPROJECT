@@ -1,10 +1,11 @@
-package generate
+package limiter
 
 import (
 	"sync"
 	"time"
 )
 
+//用于限制用户每秒钟最大的请求次数
 var mTokenBacket SmoothBursty
 var TokenSpeedPreSecond int64 = 1
 var MaxStoredTokenSecond int64 = 2
@@ -65,9 +66,11 @@ func (t *tokenBacket) reSync(now int64) {
 func (t *tokenBacket) Acquire() int64 {
 	return t.acquire(1)
 }
+
 func (t *tokenBacket) AcquireN(count int64) int64 {
 	return t.acquire(count)
 }
+
 func (t *tokenBacket) acquire(count int64) int64 {
 	//logger.MLogger.Info("-----------------------------------------------------", zap.String("---------------------------------------------------------", ""))
 	now := time.Now().UnixMicro()
@@ -77,6 +80,7 @@ func (t *tokenBacket) acquire(count int64) int64 {
 	//	logger.MLogger.Info("duration: ", zap.Int64("duration", duration))
 	return duration
 }
+
 func (t *tokenBacket) reserveEarliestAvailable(count, now int64) int64 {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
@@ -109,7 +113,7 @@ func (t *tokenBacket) TryN(count int64) (bool, int64) {
 	if count <= 0 {
 		return true, 0
 	}
-	if t.storedToken < count && now < (count-t.maxStoredToken)*t.intervalMicro+t.intervalMicro {
+	if t.storedToken < count && time.Now().UnixMicro() < (count-t.maxStoredToken)*t.intervalMicro+t.intervalMicro {
 		return false, 0
 	}
 	return true, t.acquire(count)

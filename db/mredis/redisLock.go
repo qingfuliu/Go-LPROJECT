@@ -44,12 +44,10 @@ type RedisLock interface {
 	SetKey(key string)
 }
 
-type cmdAble interface {
-	Eval(ctx context.Context, script string, keys []string, args ...interface{}) *redis.Cmd
-}
+
 
 type lock struct {
-	redisClient cmdAble
+	redisClient CmdAble
 	ctx         context.Context
 	expire      time.Duration
 	id          string
@@ -103,7 +101,7 @@ func (rl *lock) SetKey(key string) {
 	rl.key = key
 }
 
-func NewRedisLock(ctx context.Context, redis cmdAble, key string) RedisLock {
+func NewRedisLock(ctx context.Context, redis CmdAble, key string) RedisLock {
 
 	return &lock{
 		ctx:         ctx,

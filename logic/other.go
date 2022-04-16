@@ -33,7 +33,6 @@ func Likes(targetName, userName string) error {
 	//执行事务
 	//1 点赞人数加1 zset hash
 	//2.username 加入到布隆过滤器
-
 	reserveKey := "like_count_"
 	tx := mredis.RedisDb.TxPipeline()
 	tx.ZIncrBy(mredis.Ctx, reserveKey+"zset", 1, targetName)

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"sync"
 	"testing"
+	"time"
 )
 
 func TestLock_Lock(t *testing.T) {
@@ -54,4 +55,13 @@ func TestLock_Lock2(t *testing.T) {
 	} else {
 		fmt.Println("UnLock redis successful")
 	}
+
+}
+
+func TestRedisTime(t *testing.T){
+	rs,err:=RedisDb.Set(context.Background(),"time",time.Now().Unix(),0).Result()
+	if err!=nil{
+		t.Fatal(err)
+	}
+	fmt.Println(rs)
 }

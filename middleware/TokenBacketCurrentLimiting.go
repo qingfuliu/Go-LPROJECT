@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"MFile/generate"
+	"MFile/generate/limiter"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,9 +11,9 @@ func CurrentLimiting(c *gin.Context) {
 	}
 	tokenAccess_ := &tokenAccess{}
 	if err := c.ShouldBindJSON(tokenAccess_); err == nil {
-		generate.AcquireN(tokenAccess_.CountToken)
+		limiter.AcquireN(tokenAccess_.CountToken)
 	} else {
-		generate.Acquire()
+		limiter.Acquire()
 	}
 	c.Next()
 }

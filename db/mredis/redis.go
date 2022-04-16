@@ -9,6 +9,11 @@ import (
 	"time"
 )
 
+type CmdAble interface {
+	Eval(ctx context.Context, script string, keys []string, args ...interface{}) *redis.Cmd
+	Ping(ctx context.Context) *redis.StatusCmd
+}
+
 var RedisDb *redis.Client
 var Ctx = context.Background()
 
