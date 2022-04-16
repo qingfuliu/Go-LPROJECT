@@ -26,28 +26,28 @@ local requestn=tonumber(ARGV[2])
 local capacity=tonumber(ARGV[3])
 local rate=tonumber(ARGV[4])
 
-local nextFreeTIme=tonumber(redis.call("get",KEYS[2]))
-if nextFreeTIme==nil then
-    nextFreeTIme=0
-end
-
 local storedTokens=tonumber(redis.call("get",KEYS[1]))
 if storedTokens==nil then
     storedTokens=capacity
 end
 
+local nextFreeTIme=tonumber(redis.call("get",KEYS[2]))
+if nextFreeTIme==nil then
+    nextFreeTIme=0
+end
+
 if nowTime<nextFreeTIme then
-return "FAILD"
+	return "FAILED"
 else
-    storedTokens=math.max(capacity,storedTokens+(nowTime-nextFreeTIme)*rate)
-    local access=math.max(storedTokens,requestn)
+    storedTokens=math.min(capacity,storedTokens+(nowTime-nextFreeTIme)*rate)
+    local access=math.min(storedTokens,requestn)
 
     local diff=requestn-access
     storedTokens=storedTokens-access
     nextFreeTIme=nowTime+math.ceil(diff/rate)
     redis.call("Set",KEYS[1],storedTokens)
     redis.call("Set",KEYS[2],nextFreeTIme)
-return "OK"
+	return "OK"
 end
 `
 	storedTokenKeyFormat="{%s}.StoredToken"
@@ -102,7 +102,12 @@ func (t *tokenBucket) reserve(now time.Time, n int) bool {
 	if atomic.LoadInt32(&t.monitorStarted) == 1 {
 		return t.tempLimiter.AllowN(now, 1)
 	}
-
+	//KEY[1] storedTokenKey
+	//KEY[2] freeTimeStampKey
+	//ARGV[1] now
+	//ARGV[2] requestN
+	//ARGV[3] capacity
+	//ARGV[4] rate
 	rs, err := t.redis.Eval(context.Background(), requestCommend, []string{t.storedTokenKey, t.freeTimeStampKey}, now.Unix(), n, t.capacity, t.rate).Result()
 
 	if err == redis.Nil {
