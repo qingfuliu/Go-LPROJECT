@@ -17,3 +17,20 @@ func CurrentLimiting(c *gin.Context) {
 	}
 	c.Next()
 }
+
+func CurrentLimiterRedis(c *gin.Context){
+	type tokenAccess struct {
+		CountToken int `json:"countToken" bind:"required"`
+	}
+	tokenAccess_ := &tokenAccess{}
+	var ok bool
+	if err := c.ShouldBindJSON(tokenAccess_); err == nil {
+		ok=redis_limiter.AllowN(tokenAccess_.CountToken)
+	} else {
+		ok=redis_limiter.Allow()
+	}
+	if !ok{
+		c.Abort()
+	}
+	c.Next()
+}
