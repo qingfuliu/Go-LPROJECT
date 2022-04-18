@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap/zapcore"
 	"io"
 	"os"
+	"path"
 	"strings"
 	"time"
 )
@@ -68,7 +69,7 @@ func init() {
 func getWriter(fileName string) io.Writer {
 	hook, err := rotatelogs.New(
 		//替换文件名
-		strings.Replace(fileName, ".log", "", -1)+"_%Y-%m-%d.log",
+		path.Join("./log",strings.Replace(fileName, ".log", "", -1)+"_%Y-%m-%d.log"),
 		//保存多久的日志
 		rotatelogs.WithMaxAge(time.Hour*24*30),
 		//多久分割一次

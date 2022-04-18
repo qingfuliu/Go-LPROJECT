@@ -1,0 +1,15 @@
+Monday, 18-Apr-22 09:48:27 CST	FATAL	MLogger	mredis/redis.go:62	can not connect to mredis server, err is:	{"error": "dial tcp 192.168.1.103:6379: connectex: No connection could be made because the target machine actively refused it."}
+MFile/db/mredis.init.0
+	D:/goProject/MFile/db/mredis/redis.go:62
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238

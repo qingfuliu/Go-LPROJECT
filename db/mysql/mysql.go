@@ -10,12 +10,12 @@ import (
 )
 
 const (
-	//mysqlConnFormat = "%s:%s@tcp(%s:%d)/%s?parseTime=true"
-	//username        = "lqf"
-	//password        = "Wangfei222@"
-	//port            = 3306
-	//ip              = "192.168.1.103"
-	//dbName          = "blogs"
+//mysqlConnFormat = "%s:%s@tcp(%s:%d)/%s?parseTime=true"
+//username        = "lqf"
+//password        = "Wangfei222@"
+//port            = 3306
+//ip              = "192.168.1.103"
+//dbName          = "blogs"
 )
 
 var MysqlDb *gorm.DB
@@ -33,5 +33,6 @@ func init() {
 		logger.MLogger.Fatal("mysql connect failed!,err info is :", zap.Error(err))
 		os.Exit(1)
 	}
+
 	logger.MLogger.Info("mysql connect successful")
 }
