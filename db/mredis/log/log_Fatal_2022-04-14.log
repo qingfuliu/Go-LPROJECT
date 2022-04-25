@@ -1,0 +1,18 @@
+Thursday, 14-Apr-22 20:40:53 CST	FATAL	MLogger	mredis/redis.go:57	can not connect to mredis server, err is:	{"error": "dial tcp 192.168.1.103:6379: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+MFile/db/mredis.init.0
+	D:/goProject/MFile/db/mredis/redis.go:57
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238
+Thursday, 14-Apr-22 20:54:45 CST	FATAL	MLogger	mredis/redis.go:57	can not connect to mredis server, err is:	{"error": "dial tcp 192.168.1.103:6379: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+MFile/db/mredis.init.0
+	D:/goProject/MFile/db/mredis/redis.go:57
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238

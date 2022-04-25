@@ -1,0 +1,5 @@
+Tuesday, 12-Apr-22 15:05:53 CST	ERROR	MLogger	mredis/redis_test.go:14	redis sentinel connect faild	{"error": "READONLY You can't write against a read only replica."}
+MFile/db/mredis.TestValid
+	D:/goProject/MFile/db/mredis/redis_test.go:14
+testing.tRunner
+	D:/golang/src/testing/testing.go:1259

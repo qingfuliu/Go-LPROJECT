@@ -1,0 +1,11 @@
+Tuesday, 12-Apr-22 11:51:26 CST	INFO	MLogger	mredis/redis.go:55	successfully connect to mredis server
+Tuesday, 12-Apr-22 11:52:17 CST	INFO	MLogger	mredis/redis.go:55	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:05:53 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:15:09 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:16:00 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:17:06 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:19:14 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:19:44 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:20:02 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:20:14 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server
+Tuesday, 12-Apr-22 15:21:43 CST	INFO	MLogger	mredis/redis.go:59	successfully connect to mredis server

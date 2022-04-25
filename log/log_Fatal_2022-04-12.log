@@ -1,0 +1,15 @@
+Tuesday, 12-Apr-22 10:58:24 CST	FATAL	MLogger	MFile/main.go:12	Fatal text
+main.main
+	D:/goProject/MFile/main.go:12
+runtime.main
+	D:/golang/src/runtime/proc.go:255
+Tuesday, 12-Apr-22 10:59:10 CST	FATAL	MLogger	MFile/main.go:12	Fatal text
+main.main
+	D:/goProject/MFile/main.go:12
+runtime.main
+	D:/golang/src/runtime/proc.go:255
+Tuesday, 12-Apr-22 11:02:48 CST	FATAL	MLogger	MFile/main.go:12	Fatal text
+main.main
+	D:/goProject/MFile/main.go:12
+runtime.main
+	D:/golang/src/runtime/proc.go:255
