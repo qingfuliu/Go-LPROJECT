@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Saturday, 16-Apr-22 14:54:09 CST	FATAL	MLogger	mysql/mysql.go:27	mysql connect failed!,err info is :	{"error": "unknown time zone locallqfWangfei222@192.168.1.1063305blogs"}
 MFile/db/mysql.init.0
 	D:/goProject/MFile/db/mysql/mysql.go:27
@@ -43,3 +44,50 @@ runtime.doInit
 	D:/golang/src/runtime/proc.go:6475
 runtime.main
 	D:/golang/src/runtime/proc.go:238
+=======
+Saturday, 16-Apr-22 14:54:09 CST	FATAL	MLogger	mysql/mysql.go:27	mysql connect failed!,err info is :	{"error": "unknown time zone locallqfWangfei222@192.168.1.1063305blogs"}
+MFile/db/mysql.init.0
+	D:/goProject/MFile/db/mysql/mysql.go:27
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238
+Saturday, 16-Apr-22 14:54:44 CST	FATAL	MLogger	mysql/mysql.go:27	mysql connect failed!,err info is :	{"error": "invalid bool value: truelqfWangfei222@192.168.1.1063305blogs"}
+MFile/db/mysql.init.0
+	D:/goProject/MFile/db/mysql/mysql.go:27
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238
+Saturday, 16-Apr-22 14:55:34 CST	FATAL	MLogger	mysql/mysql.go:27	mysql connect failed!,err info is :	{"error": "invalid bool value: truelqfWangfei222@192.168.1.1033305blogs"}
+MFile/db/mysql.init.0
+	D:/goProject/MFile/db/mysql/mysql.go:27
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238
+Saturday, 16-Apr-22 14:56:46 CST	FATAL	MLogger	mysql/mysql.go:27	mysql connect failed!,err info is :	{"error": "invalid bool value: truelqfWangfei222@192.168.1.1033306blogs"}
+MFile/db/mysql.init.0
+	D:/goProject/MFile/db/mysql/mysql.go:27
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238
+Saturday, 16-Apr-22 14:57:21 CST	FATAL	MLogger	mysql/mysql.go:36	mysql connect successful
+MFile/db/mysql.init.0
+	D:/goProject/MFile/db/mysql/mysql.go:36
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238
+>>>>>>> master

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectTasksOptions">
+<<<<<<< HEAD
     <TaskOptions isEnabled="true">
       <option name="arguments" value="fmt $FilePath$" />
       <option name="checkSyntaxErrors" value="true" />
@@ -25,5 +26,10 @@
         <env name="PATH" value="$GoBinDirs$" />
       </envs>
     </TaskOptions>
+=======
+    <enabled-global>
+      <option value="go fmt" />
+    </enabled-global>
+>>>>>>> master
   </component>
 </project>

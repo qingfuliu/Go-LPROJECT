@@ -1,0 +1,26 @@
+Tuesday, 19-Apr-22 10:19:53 CST	FATAL	MLogger	mysql/mysql.go:33	mysql connect failed!,err info is :	{"error": "dial tcp 192.168.1.103:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+MFile/db/mysql.init.0
+	D:/goProject/MFile/db/mysql/mysql.go:33
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238
+Tuesday, 19-Apr-22 10:20:35 CST	FATAL	MLogger	mysql/mysql.go:33	mysql connect failed!,err info is :	{"error": "dial tcp 192.168.1.103:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+MFile/db/mysql.init.0
+	D:/goProject/MFile/db/mysql/mysql.go:33
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6498
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.doInit
+	D:/golang/src/runtime/proc.go:6475
+runtime.main
+	D:/golang/src/runtime/proc.go:238

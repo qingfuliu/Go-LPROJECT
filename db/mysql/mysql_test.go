@@ -42,3 +42,11 @@ func TestMysql1(t *testing.T) {
 		fmt.Println(test)
 	}
 }
+<<<<<<< HEAD
+=======
+
+//改
+func TestGormUpdate(t *testing.T) {
+	fmt.Println(-7 % 5)
+}
+>>>>>>> master

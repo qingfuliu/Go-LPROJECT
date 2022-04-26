@@ -28,7 +28,13 @@ func init() {
 	port := 3306
 	dbName := "blogs"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true", userName, passWord, ip, port, dbName)
+<<<<<<< HEAD
 	MysqlDb, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+=======
+	MysqlDb, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		CreateBatchSize: 1000,
+	})
+>>>>>>> master
 	if err != nil {
 		logger.MLogger.Fatal("mysql connect failed!,err info is :", zap.Error(err))
 		os.Exit(1)

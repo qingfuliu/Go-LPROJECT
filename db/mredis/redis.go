@@ -49,7 +49,10 @@ func sentinelInit() {
 			MinIdleConns:  10,
 		},
 	)
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 }
 
 func clusterInit() {

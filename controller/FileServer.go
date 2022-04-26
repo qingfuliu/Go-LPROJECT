@@ -6,8 +6,15 @@ import (
 	"MFile/generate/hash"
 	logic "MFile/logic/file"
 	"MFile/models"
+<<<<<<< HEAD
 	"fmt"
 	"github.com/gin-gonic/gin"
+=======
+	"errors"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+>>>>>>> master
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -55,6 +62,18 @@ func BackPointStart(c *gin.Context) {
 	chunkTotal, _ := strconv.Atoi(c.PostForm("chunkTotal"))
 	fileMd5 := c.PostForm("fileMd5")
 
+<<<<<<< HEAD
+=======
+	if md5, _ := hash.Md5(fileName); md5 != fileNameMd5 {
+		c.JSON(http.StatusOK, gin.H{
+			"ChunkNext": -1,
+			"code":      "failed",
+			"msg":       "文件名校验失败",
+		})
+		return
+	}
+
+>>>>>>> master
 	fileChunkInfo, err := mysql.FindFirstOrCreate(models.FileChunkInFo{
 		FileName:    strings.TrimSuffix(fileName, fileExt),
 		FileNameMd5: fileNameMd5,
@@ -63,8 +82,12 @@ func BackPointStart(c *gin.Context) {
 		FileExt:     fileExt,
 		ChunkNext:   1,
 	})
+<<<<<<< HEAD
 
 	if err != nil || fileChunkInfo.FileMd5 != fileMd5 {
+=======
+	if err != nil {
+>>>>>>> master
 		c.JSON(http.StatusOK, gin.H{
 			"ChunkNext": -1,
 			"code":      "failed",
@@ -72,7 +95,10 @@ func BackPointStart(c *gin.Context) {
 		})
 		return
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 	c.JSON(http.StatusOK, gin.H{
 		"ChunkNext": fileChunkInfo.ChunkNext,
 		"code":      "ok",
@@ -81,6 +107,32 @@ func BackPointStart(c *gin.Context) {
 }
 
 func RemoveFileChunk(c *gin.Context) {
+<<<<<<< HEAD
+=======
+	fileName := c.PostForm("fileName")
+	fileName = strings.TrimSuffix(fileName, path.Ext(fileName))
+	var fileChunkInfo models.FileChunkInFo
+	tx := mysql.MysqlDb.Begin()
+
+	if errors.Is(tx.Select("*").Where("fileName=?", fileName).First(&fileChunkInfo).Error, gorm.ErrRecordNotFound) {
+		c.JSON(http.StatusOK, gin.H{
+			"msg":  "文件已经删除或已经上传成功",
+			"code": "failed",
+		})
+	}
+
+	err := logic.RemoveFileChunk(fileName, fileChunkInfo.ChunkNext)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"msg":  "文件已经删除或已经上传成功",
+			"code": "failed",
+		})
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": "ok",
+	})
+	return
+>>>>>>> master
 
 }
 
@@ -130,31 +182,50 @@ func BackPointProcess(c *gin.Context) {
 		c.JSON(http.StatusOK, "can not found chunk from form")
 		return
 	}
+<<<<<<< HEAD
+=======
+	defer file.Close()
+>>>>>>> master
 	if data, err = io.ReadAll(file); err != nil {
 		c.JSON(http.StatusOK, "read chunk failed")
 		return
 	}
+<<<<<<< HEAD
 	md5, _ := hash.Md5(string(data))
+=======
+	md5 := hash.Md5Byte(data)
+>>>>>>> master
 	if chunkMd5 != md5 {
 		c.JSON(http.StatusOK, gin.H{
 			"msg":       "md5 verification failed",
 			"code":      "failed",
 			"chunkNext": chunkNum + 1,
 		})
+<<<<<<< HEAD
 		c.JSON(http.StatusOK, "md5 verification failed")
 		return
 	}
 	file.Close()
+=======
+		return
+	}
+>>>>>>> master
 
 	if err = logic.MakeFileChunk(data, fileName, chunkNum); err != nil {
 		c.JSON(http.StatusOK, "md5 verification failed")
 		return
 	}
 
+<<<<<<< HEAD
 	if fileChunkInfo.ChunkTotal == chunkNum+1 {
 		err = tx.Table("BackPointInfo").Where("fileName=?", fileName).Updates(map[string]interface{}{
 			"chunkNext": fileChunkInfo.ChunkNext + 1,
 			"finished":  true,
+=======
+	if fileChunkInfo.ChunkTotal == chunkNum {
+		err = tx.Table("BackPointInfo").Where("fileName=?", fileName).Updates(map[string]interface{}{
+			"finished": true,
+>>>>>>> master
 		}).Error
 	} else {
 		err = tx.Table("BackPointInfo").Where("fileName=?", fileName).Update("chunkNext", fileChunkInfo.ChunkNext+1).Error
@@ -171,5 +242,52 @@ func BackPointProcess(c *gin.Context) {
 }
 
 func MergeFileChunk(c *gin.Context) {
+<<<<<<< HEAD
 
+=======
+	fileName := c.PostForm("fileName")
+	fileName = strings.TrimSuffix(fileName, path.Ext(fileName))
+	chunkTotal, _ := strconv.Atoi(c.PostForm("chunkTotal"))
+	tx := mysql.MysqlDb.Begin()
+	var fileChunkInfo models.FileChunkInFo
+	err := tx.Select("*").Where("fileName=?", fileName).Find(&fileChunkInfo).Error
+	defer tx.Commit()
+	if errors.Is(err, gorm.ErrRecordNotFound) || err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": "Failed",
+			"msg":  "server busy",
+		})
+		return
+	}
+
+	if chunkTotal != fileChunkInfo.ChunkTotal || fileChunkInfo.Finished != true {
+		c.JSON(http.StatusOK, gin.H{
+			"code": "Failed",
+			"msg":  "error chunkTotal",
+		})
+		return
+	} else {
+		err = tx.Unscoped().Where("fileName=?", fileName).Delete(&models.FileChunkInFo{}).Error
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": "Failed",
+				"msg":  "server busy",
+			})
+			return
+		}
+	}
+	err = logic.MergeFileChunk(fileName, fileChunkInfo.FileExt, fileChunkInfo.FileMd5, chunkTotal)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": "failed",
+			"msg":  "server busy",
+		})
+		tx.Rollback()
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": "ok",
+	})
+	return
+>>>>>>> master
 }
