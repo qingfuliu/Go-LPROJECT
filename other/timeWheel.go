@@ -4,7 +4,6 @@ import (
 	"container/list"
 	"context"
 	"errors"
-	"fmt"
 	"sync"
 	"time"
 )
@@ -12,6 +11,7 @@ import (
 var (
 	ErrorShutdown   = errors.New("task does not existed")
 	ErrorExisted    = errors.New("task has been existed")
+	ErrorIsNil      = errors.New("Unexpected nil value")
 	ErrorNotExisted = errors.New("task does not existed")
 )
 
@@ -85,6 +85,9 @@ type TimeTask struct {
 }
 
 func (t *timeWheel) RemoveTask(key interface{}) error {
+	if key == nil {
+		return ErrorIsNil
+	}
 	select {
 	case t.removeTaskChan <- key:
 		return nil
@@ -151,7 +154,6 @@ func (t *timeWheel) Run() {
 			case fun := <-t.drainChan:
 				t.drainTask(fun)
 			case <-t.trierChan:
-				fmt.Println("come trierChan!")
 				t.scanTaskAndRun()
 			}
 		}
@@ -159,6 +161,9 @@ func (t *timeWheel) Run() {
 }
 
 func (t *timeWheel) cacluatePosition(duration time.Duration) (position int, circle int) {
+	if duration < t.interval {
+		return t.pos + 1, 0
+	}
 	temp := int(duration / t.interval)
 	position = (temp + t.pos) % t.numSlots
 	circle = (temp - 1) / t.numSlots
@@ -190,9 +195,6 @@ func (t *timeWheel) addTask(base *baseEntry) {
 		circle:    circle,
 	}
 	t.tasksList[position].PushBack(timeEntry)
-	if base.repeat {
-		position++
-	}
 	t.setOrLoadMap(position, timeEntry)
 }
 func (t *timeWheel) modifyTask(base *baseEntry) {
@@ -200,36 +202,33 @@ func (t *timeWheel) modifyTask(base *baseEntry) {
 	if !ok {
 		return
 	}
+
 	posEntry := val.(*positionEntry)
-	base.value = posEntry.value
+	pos := posEntry.pos
+
 	if base.delay < t.interval {
-		//t.execute(posEntry.key, posEntry.value)
-		if base.repeat {
-			newTimingEntry := &timeingEntry{
-				baseEntry: base,
-			}
-			t.tasksList[t.pos+1].PushBack(newTimingEntry)
-			t.setOrLoadMap(posEntry.pos+1, newTimingEntry)
-		}
-		posEntry.removed = true
+		posEntry.baseEntry.delay = base.delay
+		posEntry.baseEntry.repeat = base.repeat
 		return
 	}
 
 	position, circle := t.cacluatePosition(base.delay)
-	if t.pos <= position {
+	if pos <= position {
 		posEntry.pos, posEntry.circle = position, circle
+		posEntry.diff = position - pos
 	} else if circle > 1 {
 		posEntry.pos, posEntry.circle = position, circle-1
-		posEntry.diff = t.pos + t.numSlots - t.pos
+		posEntry.diff = t.numSlots + position - pos
 	} else {
 		posEntry.removed = true
+		base.value = posEntry.value
 		newTimingEntry := &timeingEntry{
 			baseEntry: base,
+			circle:    circle,
 		}
 		t.tasksList[position].PushBack(newTimingEntry)
 		t.tasksMap.Store(position, newTimingEntry)
 	}
-
 	return
 }
 func (t *timeWheel) drainTask(task func(key, value interface{})) {
@@ -261,11 +260,14 @@ func (t *timeWheel) scanTaskAndRun() {
 		val := task.Value.(*timeingEntry)
 		if val.removed {
 			taskList.Remove(task)
-			t.tasksMap.Delete(val.key)
 			task = next
 			continue
 		} else if val.diff != 0 {
-			val.diff = 0
+			taskList.Remove(task)
+			newPos:=(t.pos+val.diff)%t.numSlots
+			val.diff=0
+			t.tasksList[newPos].PushBack(newPos)
+			t.setOrLoadMap(newPos,val)
 			task = next
 			continue
 		} else if val.circle != 0 {
@@ -273,6 +275,7 @@ func (t *timeWheel) scanTaskAndRun() {
 			task = next
 			continue
 		}
+
 		timeTasks = append(timeTasks, TimeTask{
 			value: val.value,
 			key:   val.key,
@@ -288,7 +291,6 @@ func (t *timeWheel) scanTaskAndRun() {
 			t.setOrLoadMap(pos, val)
 		} else {
 			taskList.Remove(task)
-			t.tasksMap.Delete(val.key)
 		}
 		task = next
 	}

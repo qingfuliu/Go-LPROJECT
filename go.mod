@@ -9,7 +9,6 @@ require (
 	github.com/go-playground/validator/v10 v10.10.1
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
-	github.com/panjf2000/ants v1.3.0
 	github.com/petermattis/goid v0.0.0-20220331194723-8ee3e6ded87a
 	github.com/spaolacci/murmur3 v1.1.0
 	go.uber.org/zap v1.21.0
