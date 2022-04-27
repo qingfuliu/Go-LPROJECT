@@ -3,6 +3,7 @@ module MFile
 go 1.18
 
 require (
+	github.com/DeanThompson/ginpprof v0.0.0-20201112072838-007b1e56b2e1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
@@ -12,6 +13,7 @@ require (
 	github.com/petermattis/goid v0.0.0-20220331194723-8ee3e6ded87a
 	github.com/spaolacci/murmur3 v1.1.0
 	go.uber.org/zap v1.21.0
+	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gorm v1.23.4

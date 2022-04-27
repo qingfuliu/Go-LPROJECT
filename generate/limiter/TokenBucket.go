@@ -10,6 +10,10 @@ var mTokenBacket SmoothBursty
 var TokenSpeedPreSecond int64 = 1
 var MaxStoredTokenSecond int64 = 2
 
+//func init() {
+//	mTokenBacket
+//}
+
 func Acquire() int64 {
 	return mTokenBacket.acquire(1)
 }

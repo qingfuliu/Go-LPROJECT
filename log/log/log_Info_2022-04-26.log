@@ -1,0 +1,26 @@
+Tuesday, 26-Apr-22 17:58:45 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 17:59:20 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:03:38 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:03:38 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:04:01 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:04:01 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:04:06 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:04:06 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:07:12 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:07:12 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:09:29 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:09:29 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:14:53 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:14:53 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:18:01 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:18:01 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:20:39 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:20:39 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 18:33:58 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 18:33:58 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 19:03:50 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 19:03:50 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 21:05:48 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 21:05:48 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server
+Tuesday, 26-Apr-22 21:18:12 CST	INFO	MLogger	mysql/mysql.go:39	mysql connect successful
+Tuesday, 26-Apr-22 21:18:12 CST	INFO	MLogger	mredis/redis.go:64	successfully connect to mredis server

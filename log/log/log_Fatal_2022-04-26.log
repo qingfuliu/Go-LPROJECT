@@ -1,0 +1,15 @@
+Tuesday, 26-Apr-22 17:58:53 CST	FATAL	MLogger	mredis/redis.go:61	can not connect to mredis server, err is:	{"error": "dial tcp 192.168.1.103:6379: connect: connection refused"}
+MFile/db/mredis.init.0
+	/home/lqf/golang/GoProject/MFile/db/mredis/redis.go:61
+runtime.doInit
+	/usr/local/go/src/runtime/proc.go:6222
+runtime.doInit
+	/usr/local/go/src/runtime/proc.go:6199
+runtime.doInit
+	/usr/local/go/src/runtime/proc.go:6199
+runtime.doInit
+	/usr/local/go/src/runtime/proc.go:6199
+runtime.doInit
+	/usr/local/go/src/runtime/proc.go:6199
+runtime.main
+	/usr/local/go/src/runtime/proc.go:233

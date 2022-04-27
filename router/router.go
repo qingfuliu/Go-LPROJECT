@@ -3,6 +3,7 @@ package router
 import (
 	"MFile/controller"
 	"MFile/middleware"
+	"github.com/DeanThompson/ginpprof"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -14,12 +15,14 @@ func init() {
 	Engine.Use(gin.Recovery())
 	Engine.Use(gin.Logger())
 	Engine.Use(cors.Default())
-	Engine.Use(middleware.CurrentLimiting)
-	Engine.POST("/UpLoadFile", controller.UpLoadFile)
-	Engine.POST("/BackPointStart", controller.BackPointStart)
-	Engine.POST("/BackPointProcess", controller.BackPointProcess)
-	Engine.POST("/MergeFileChunk", controller.MergeFileChunk)
-	Engine.POST("/DownLoadFile", controller.DownLoadFile)
+	Engine.Use(middleware.CurrentLimiterRedis)
+	Engine.GET("/UpLoadFile", controller.UpLoadFile)
+	Engine.GET("/BackPointStart", controller.BackPointStart)
+	Engine.GET("/BackPointProcess", controller.BackPointProcess)
+	Engine.GET("/MergeFileChunk", controller.MergeFileChunk)
+	Engine.GET("/DownLoadFile", controller.DownLoadFile)
+	ginpprof.Wrap(Engine)
+
 }
 
 func logger(c *gin.Context) {
