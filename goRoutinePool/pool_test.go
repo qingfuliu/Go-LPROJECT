@@ -2,7 +2,6 @@ package goRoutinePool
 
 import (
 	"fmt"
-	"runtime"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -14,8 +13,7 @@ func TestNewPool(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Printf("%v", pool)
-	defer pool.Release()
+	//fmt.Printf("%v", pool)
 	var i int64 = 0
 	wait := sync.WaitGroup{}
 	wait.Add(10000)
@@ -24,7 +22,7 @@ func TestNewPool(t *testing.T) {
 		for k := 0; k < 1000; k++ {
 			atomic.AddInt64(&i, 1)
 		}
-		fmt.Println("num goroutine: ", runtime.NumGoroutine())
+		//fmt.Println("num goroutine: ", runtime.NumGoroutine())
 		wait.Done()
 	}
 	for j := 0; j < 10000; j++ {
@@ -37,9 +35,10 @@ func TestNewPool(t *testing.T) {
 	if i != 1000*10000 {
 		t.Fatalf("i should be 1000,but is: %d", i)
 	}
-
-	if pool.blockingNum != 0 {
-		t.Fatalf("blockingNum should be 0,but is: %d", pool.blockingNum)
+	pool.Release()
+	time.Sleep(time.Second)
+	if pool.blockingNum != 0 || pool.Running() != 0 || !pool.works.isEmpty() {
+		t.Fatalf("blockingNum should be 0,but is: %d,%d,%v", pool.blockingNum, pool.Running(), pool.works.isEmpty())
 	}
 }
 

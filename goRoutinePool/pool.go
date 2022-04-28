@@ -128,7 +128,6 @@ func (p *Pool) Release() {
 
 	if atomic.CompareAndSwapInt32(&p.state, poolStateRunning, poolStateClosed) {
 		p.mutex.Lock()
-		p.running = 0
 		p.works.reset()
 		p.mutex.Unlock()
 		p.cond.Broadcast()

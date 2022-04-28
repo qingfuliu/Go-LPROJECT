@@ -1,6 +1,7 @@
 package goRoutinePool
 
 import (
+	"MFile/other"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -16,7 +17,57 @@ type PoolFunc struct {
 	workCache   sync.Pool
 	goFunc      func(interface{})
 	mutex       sync.Locker
-	cond        sync.Cond
+	cond        *sync.Cond
+}
+
+func NewPoolFunc(size int32, goFunc func(interface{}), options ...Option) (pool *PoolFunc, err error) {
+	opts := loadOption(options...)
+
+	if opts.ExpireDuration < 0 {
+		return nil, errorInvalidExpire
+	} else if opts.ExpireDuration == 0 {
+		opts.ExpireDuration = DefaultCleanIntervalTime
+	}
+	var capacity int32
+	if opts.PreAllocate {
+		if size < 0 {
+			return nil, errorInvalidCapacity
+		} else if size == 0 {
+			capacity = DefaultAntsPoolSize
+		}
+	} else {
+		capacity = -1
+	}
+	mutex := other.NewSpinLock()
+	pool = &PoolFunc{
+		Options:  opts,
+		capacity: capacity,
+		workers:  make([]*goWorkerWithFunc, 0, size),
+		mutex:    mutex,
+		cond:     sync.NewCond(mutex),
+		goFunc:   goFunc,
+		workCache: sync.Pool{
+			New: func() interface{} {
+				return &goWorkerWithFunc{
+					arg:  make(chan interface{}),
+					pool: pool,
+				}
+			},
+		},
+	}
+	return
+}
+
+func (p *PoolFunc) Submit(arg interface{}) error {
+	if p.IsClosed() {
+		return errorPoolClosed
+	}
+	if g := p.retrieveWorker(); g == nil {
+		return errorPoolOverLoad
+	} else {
+		g.arg <- arg
+	}
+	return nil
 }
 
 func (p *PoolFunc) binarySearch(time_ time.Time) int {
@@ -26,7 +77,7 @@ func (p *PoolFunc) binarySearch(time_ time.Time) int {
 	l := 0
 	r := len(p.workers)
 	for l < r {
-		mid := l + (l-r)>>1
+		mid := l + (r-l)>>1
 		if p.workers[mid].recycleTime.Before(time_) {
 			l = mid + 1
 		} else {
@@ -105,7 +156,6 @@ func (p *PoolFunc) Release() {
 			p.workers[i].arg <- nil
 		}
 		p.workers = p.workers[:0]
-		p.running = 0
 		p.cond.Broadcast()
 		p.mutex.Unlock()
 	}
@@ -119,7 +169,7 @@ func (p *PoolFunc) retrieveWorker() (g *goWorkerWithFunc) {
 
 	newWorkerHandle := func() {
 		g = p.workCache.Get().(*goWorkerWithFunc)
-		g.run()
+		go g.run()
 	}
 
 	p.mutex.Lock()
@@ -137,6 +187,7 @@ func (p *PoolFunc) retrieveWorker() (g *goWorkerWithFunc) {
 		capacity := p.Cap()
 		if capacity == -1 || capacity > p.Running() {
 			p.mutex.Unlock()
+
 			newWorkerHandle()
 			return
 		} else if p.NoBlocking || p.MaxBlockNums <= p.blockingNum {
