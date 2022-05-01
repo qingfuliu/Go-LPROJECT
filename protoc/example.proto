@@ -1,0 +1,18 @@
+syntax="proto3";
+option go_package="./;protoc";
+package example;
+
+message Student{
+  int32 a=1;
+  sint32 p=2;
+  int64 pp=3;
+  sint64 ppp=4;
+  string name=5;
+  bytes namess=6;
+  double doub=7;
+  float floa=8;
+  fixed32 fixed3=10;
+  fixed64 sadfsdf=11;
+  sfixed64 sdfsdfsdf=12;
+  sfixed64 sdfsadf=23;
+}

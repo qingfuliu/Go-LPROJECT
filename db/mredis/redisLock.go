@@ -36,15 +36,13 @@ end
 
 type RedisLock interface {
 	Lock() (bool, error)
-	UnLock() (bool, error)
+	Unlock() (bool, error)
 	SetExpire(duration time.Duration)
 	GetExpire() time.Duration
 	GetId() string
 	GetKey() string
 	SetKey(key string)
 }
-
-
 
 type lock struct {
 	redisClient CmdAble
@@ -70,7 +68,7 @@ func (rl *lock) Lock() (bool, error) {
 	}
 	return false, unKnowErr
 }
-func (rl *lock) UnLock() (bool, error) {
+func (rl *lock) Unlock() (bool, error) {
 	rs, err := rl.redisClient.Eval(rl.ctx, unLockCommend, []string{rl.key}, rl.id).Result()
 
 	if err != nil || err == redis.Nil {
