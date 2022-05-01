@@ -1,0 +1,38 @@
+syntax="proto3";
+package models;
+import "google/protobuf/any.proto";
+option go_package="./;models";
+
+message o1{
+  message o2{
+    message o3{
+      enum o3_enum{
+        option allow_alias = true;
+        LQF=0;
+        LQF1=0;
+      }
+    }
+  }
+}
+
+message Users{
+  string name =1;
+  int32 age=2;
+  string id =3;
+  double rate_double=4;
+  float rate_float=5;
+  fixed32 goable=10;
+  bytes name_byte=11;
+  o1.o2.o3.o3_enum enum_Users=13;
+  o1 o1_Users=12;
+  map<int32,int32>map_Users =14;
+  google.protobuf.Any any_Users=35;
+  oneof one{
+    string allow=99;
+    string allow2=100;
+  }
+}
+
+service SearchService{
+  rpc ServiceSearch(Users)returns (Users);
+}
